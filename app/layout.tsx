@@ -10,8 +10,8 @@ const spaceGrotesk = Space_Grotesk({
 })
 
 export const metadata: Metadata = {
-  title: 'priceless',
-  description: 'store for price tracking',
+  title: 'PriceAlert',
+  description: 'store for tracking prices',
 }
 
 export default function RootLayout({

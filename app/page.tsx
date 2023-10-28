@@ -15,7 +15,7 @@ const Home = async () => {
     <section className='px-6 md:px-20 py-24 border-2 border-red-500'>
       <div className="flex max-xl:flex-col">
         <div className="flex flex-col justify-center">
-          <p className='small-text'>Smart Shopping Starts Here:
+          <p className='small-text'>Track prices for your products:
             <Image
               src="assets/icons/arrow-right.svg"
               alt='arrow-right'
@@ -25,7 +25,7 @@ const Home = async () => {
           </p>
           <h1 className='head-text'>
             Welcome to
-            <span className='text-primary'> Priceless</span>
+            <span className='text-primary'> PriceAlert</span>
           </h1>
           <p className='mt-6'>Some description</p>
 
