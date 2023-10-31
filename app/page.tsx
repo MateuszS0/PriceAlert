@@ -12,7 +12,7 @@ const Home = async () => {
 
   return (
     <>
-    <section className='px-6 md:px-20 py-24 border-2 border-red-500'>
+    <section className='px-6 md:px-20 py-24'>
       <div className="flex max-xl:flex-col">
         <div className="flex flex-col justify-center">
           <p className='small-text'>Track prices for your products:
@@ -25,9 +25,9 @@ const Home = async () => {
           </p>
           <h1 className='head-text'>
             Welcome to
-            <span className='text-primary'> PriceAlert</span>
+            Price<span className='text-primary'>Alert</span>
           </h1>
-          <p className='mt-6'>Some description</p>
+          <p className='mt-6'>Enter amazon product URL to track it</p>
 
           <Searchbar/>
         </div>
