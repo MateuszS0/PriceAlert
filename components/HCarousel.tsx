@@ -4,8 +4,8 @@ import { Carousel } from "react-responsive-carousel"
 import Image from "next/image"
 
 const HImage = [
-  {imgUrl: '/assets/images/hero-1.svg', alt: 'smartwatch'},
   {imgUrl: '/assets/images/hero-2.svg', alt: 'bag'},
+  {imgUrl: '/assets/images/hero-1.svg', alt: 'smartwatch'},
   {imgUrl: '/assets/images/hero-3.svg', alt: 'lamp'},
   {imgUrl: '/assets/images/hero-4.svg', alt: 'air fryer'},
   {imgUrl: '/assets/images/hero-5.svg', alt: 'chair'}
@@ -24,8 +24,8 @@ const HCarousel = () => {
         <Image
           src={image.imgUrl}
           alt={image.alt}
-          width={16}
-          height={16}
+          width={600}
+          height={600}
           className="object-contain"
           key={image.alt}
         />
