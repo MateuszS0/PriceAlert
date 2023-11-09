@@ -58,13 +58,13 @@ export async function scrapeAmazonProduct(url: string) {
 
     const description = extractDescription($)
 
-    if (1 == 1) { //change this later
-      originalPrice = parseInt(originalPrice);
-      let currentPriceNumeric = parseInt(currentPrice);
-      let discountRateNumeric = parseInt(discountRate.trim());
+    // if (1 == 1) { //change this later
+    //   originalPrice = parseInt(originalPrice);
+    //   let currentPriceNumeric = parseInt(currentPrice);
+    //   let discountRateNumeric = parseInt(discountRate.trim());
 
-      originalPrice = (currentPriceNumeric / (100 - discountRateNumeric)) * 100
-    }
+    //   originalPrice = (currentPriceNumeric / (100 - discountRateNumeric)) * 100
+    // }
 
     // Construct data object with scraped information
     const data = {
@@ -82,7 +82,7 @@ export async function scrapeAmazonProduct(url: string) {
       isOutOfStock: outOfStock,
       description,
       lowestPrice: getLowestPrice([originalPrice, currentPrice]) || Number(currentPrice),
-      highestPrice: getHighestPrice([originalPrice, currentPrice]) || Number(originalPrice),
+      highestPrice: getHighestPrice([originalPrice, currentPrice]) || Number(currentPrice),
       averagePrice: getAveragePrice([originalPrice, currentPrice]) || Number(currentPrice),
     }
     if (data.averagePrice == data.currentPrice || data.averagePrice == data.originalPrice) {
