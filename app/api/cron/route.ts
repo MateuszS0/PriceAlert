@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 import { getLowestPrice, getHighestPrice, getAveragePrice, getEmailNotifType } from "@/lib/utils";
 import { connectToDB } from "@/lib/scraper/mongoose";
 import Product from "@/models/product.model";
-import { scrapeAmazonProduct } from "@/lib/scraper";
+import { scrapeAmazonProduct } from "@/lib/scraper/scraper";
 import { generateEmailBody, sendEmail } from "@/lib/nodemailer";
 
 export const maxDuration = 10;

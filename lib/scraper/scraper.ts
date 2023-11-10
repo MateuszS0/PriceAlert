@@ -2,10 +2,10 @@
 
 import axios from 'axios';
 import * as cheerio from 'cheerio';
-import { extractCurrency, extractDescription, extractPrice, getAveragePrice, getHighestPrice, getLowestPrice } from '../utils';
+import { extractCurrency, extractDescription, extractPrice } from '../utils';
 
 export async function scrapeAmazonProduct(url: string) {
-  if (!url) return;
+  if(!url) return;
 
   // BrightData proxy configuration
   const username = String(process.env.BRIGHT_DATA_USERNAME);
@@ -36,7 +36,7 @@ export async function scrapeAmazonProduct(url: string) {
       $('.a-button-selected .a-color-base'),
     );
 
-    let originalPrice = extractPrice(
+    const originalPrice = extractPrice(
       $('#priceblock_ourprice'),
       $('.a-price.a-text-price span.a-offscreen'),
       $('#listPrice'),
@@ -46,8 +46,8 @@ export async function scrapeAmazonProduct(url: string) {
 
     const outOfStock = $('#availability span').text().trim().toLowerCase() === 'currently unavailable';
 
-    const images =
-      $('#imgBlkFront').attr('data-a-dynamic-image') ||
+    const images = 
+      $('#imgBlkFront').attr('data-a-dynamic-image') || 
       $('#landingImage').attr('data-a-dynamic-image') ||
       '{}'
 
@@ -57,14 +57,6 @@ export async function scrapeAmazonProduct(url: string) {
     const discountRate = $('.savingsPercentage').text().replace(/[-%]/g, "");
 
     const description = extractDescription($)
-
-    // if (1 == 1) { //change this later
-    //   originalPrice = parseInt(originalPrice);
-    //   let currentPriceNumeric = parseInt(currentPrice);
-    //   let discountRateNumeric = parseInt(discountRate.trim());
-
-    //   originalPrice = (currentPriceNumeric / (100 - discountRateNumeric)) * 100
-    // }
 
     // Construct data object with scraped information
     const data = {
@@ -77,16 +69,13 @@ export async function scrapeAmazonProduct(url: string) {
       priceHistory: [],
       discountRate: Number(discountRate),
       category: 'category',
-      reviewsCount: 100,
+      reviewsCount:100,
       stars: 4.5,
       isOutOfStock: outOfStock,
       description,
-      lowestPrice: getLowestPrice([originalPrice, currentPrice]) || Number(currentPrice),
-      highestPrice: getHighestPrice([originalPrice, currentPrice]) || Number(currentPrice),
-      averagePrice: getAveragePrice([originalPrice, currentPrice]) || Number(currentPrice),
-    }
-    if (data.averagePrice == data.currentPrice || data.averagePrice == data.originalPrice) {
-      data.averagePrice = (data.originalPrice + data.currentPrice) / 2
+      lowestPrice: Number(currentPrice) || Number(originalPrice),
+      highestPrice: Number(originalPrice) || Number(currentPrice),
+      averagePrice: Number(currentPrice) || Number(originalPrice),
     }
 
     return data;
