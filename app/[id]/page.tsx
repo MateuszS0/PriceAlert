@@ -6,7 +6,7 @@ import Product from '../../models/product.model';
 import { formatNumber } from '@/lib/utils';
 import PriceInfoCard from '@/components/PriceInfoCard';
 import {redirect} from "next/navigation";
-import ProductCard from '@/components/ProductCard';
+import ProductCard from '@/components/M-ProductCard';
 import Modal from '@/components/Modal';
 
 // scrape %

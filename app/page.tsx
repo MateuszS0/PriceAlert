@@ -3,7 +3,7 @@ import Image from 'next/image'
 import Searchbar from '@/components/Searchbar'
 import HCarousel from '@/components/HCarousel'
 import { getAllProducts } from '@/lib/actions'
-import ProductCard from '@/components/ProductCard'
+import ProductCard from '@/components/M-ProductCard'
 
 
 const Home = async () => {

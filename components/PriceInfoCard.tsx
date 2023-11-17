@@ -8,7 +8,7 @@ interface Props {
     borderColor: string
 }
 
-const PriceInfoCard = ({title, iconSrc, value, borderColor}: Props) => {
+const PriceInfoCard = ({title, iconSrc, value}: Props) => {
     return (
         <div className={`price-info_card`}>
           <p className="text-base text-black-100">{title}</p>
