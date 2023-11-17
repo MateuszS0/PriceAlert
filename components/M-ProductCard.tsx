@@ -21,9 +21,10 @@ const ProductCard = ({product}: Props) => {
         </div>
         <div className='flex flex-col gap-3'>
             <h3 className='product-title'>{product.title}</h3>
-            <div className='flex justify-between'>
-                <p className='text-black opacity-50 text-lg capitalize'>{product.category}</p>
-                <p className='text-black text-lg font-semibold'>
+            <div className='flex justify-center'>
+                {/* <p className='text-black opacity-50 text-lg capitalize'>{product.category}</p> */}
+                <p className='text-black text-xl opacity-30'>Current Price: </p>
+                <p className='text-black text-xl font-semibold'>
                     <span>{product?.currentPrice}</span>
                     <span>{product?.currency}</span>
                 </p>

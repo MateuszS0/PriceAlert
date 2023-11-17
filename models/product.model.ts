@@ -18,13 +18,14 @@ const productSchema = new mongoose.Schema({
   averagePrice: { type: Number },
   discountRate: { type: Number },
   description: { type: String },
-  category: { type: String },
+  // category: { type: String },
   reviewsCount: { type: Number },
   isOutOfStock: { type: Boolean, default: false },
   users: [
     {email: { type: String, required: true}}
   ], default: [],
-}, { timestamps: true });
+}, { timestamps: true }
+);
 
 const Product = mongoose.models.Product || mongoose.model('Product', productSchema);
 
