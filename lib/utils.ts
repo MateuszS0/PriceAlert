@@ -15,15 +15,19 @@ export function extractPrice(...elements: any) {
     const priceText = element.text().trim();
     console.log(priceText);
     
-    if(priceText) {
-      const cleanPrice = priceText.replace(/[^\d.]/g, '');
-
-      let firstPrice; 
-
+    if (priceText) {
+      const cleanPrice = priceText.replace(/[^\d,]/g, '').replace(',', '.');
+    
+      let firstPrice;
+    
       if (cleanPrice) {
         firstPrice = cleanPrice.match(/\d+\.\d{2}/)?.[0];
-      } 
-
+      }
+    
+      if (firstPrice) {
+        return firstPrice;
+      }
+    
       return firstPrice || cleanPrice;
     }
   }
@@ -93,24 +97,24 @@ export function getAveragePrice(priceList: PriceHistoryItem[]) {
   return averagePrice;
 }
 
-// export const getEmailNotifType = (
-//   scrapedProduct: Product,
-//   currentProduct: Product
-// ) => {
-//   const lowestPrice = getLowestPrice(currentProduct.priceHistory);
+export const getEmailNotifType = (
+  scrapedProduct: Product,
+  currentProduct: Product
+) => {
+  const lowestPrice = getLowestPrice(currentProduct.priceHistory);
 
-//   if (scrapedProduct.currentPrice < lowestPrice) {
-//     return Notification.LOWEST_PRICE as keyof typeof Notification;
-//   }
-//   if (!scrapedProduct.isOutOfStock && currentProduct.isOutOfStock) {
-//     return Notification.CHANGE_OF_STOCK as keyof typeof Notification;
-//   }
-//   if (scrapedProduct.discountRate >= THRESHOLD_PERCENTAGE) {
-//     return Notification.THRESHOLD_MET as keyof typeof Notification;
-//   }
+  if (scrapedProduct.currentPrice < lowestPrice) {
+    return Notification.LOWEST_PRICE as keyof typeof Notification;
+  }
+  if (!scrapedProduct.isOutOfStock && currentProduct.isOutOfStock) {
+    return Notification.CHANGE_OF_STOCK as keyof typeof Notification;
+  }
+  if (scrapedProduct.discountRate >= THRESHOLD_PERCENTAGE) {
+    return Notification.THRESHOLD_MET as keyof typeof Notification;
+  }
 
-//   return null;
-// };
+  return null;
+};
 
 export const formatNumber = (num: number = 0) => {
   return num.toLocaleString(undefined, {

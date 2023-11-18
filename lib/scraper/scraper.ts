@@ -33,7 +33,7 @@ export async function scrapeAmazonProduct(url: string) {
     const currentPrice = extractPrice(
       $('.priceToPay span.a-price-whole'),
       $('.a.size.base.a-color-price'),
-      $('.a-button-selected .a-color-base'),
+      $('.a-button-selected .a-color-base').first()
     );
 
     const originalPrice = extractPrice(
@@ -41,10 +41,10 @@ export async function scrapeAmazonProduct(url: string) {
       $('.a-price.a-text-price span.a-offscreen'),
       $('#listPrice'),
       $('#priceblock_dealprice'),
-      $('.a-size-base.a-color-price')
+      $('.a-size-base.a-color-price').first()
     );
     const priceFraction = extractPrice(
-      $('span.a-price-fraction')
+      $('span.a-price-fraction').first()
     )
 
     const outOfStock = $('#availability span').text().trim().toLowerCase() === 'currently unavailable';

@@ -94,7 +94,7 @@ const ProductDetails = async ({ params: { id } }: Props) => {
                     height={16}
                   />
                   <p className="text-sm text-primary-orange font-semibold">
-                    {product.stars || '25'}
+                    {product.stars || '40'}
                   </p>
                 </div>
 
@@ -113,7 +113,7 @@ const ProductDetails = async ({ params: { id } }: Props) => {
 
               <p className="text-sm text-black opacity-50">
                  {/* scrape the % */}
-                <span className="text-primary-green font-semibold">93% </span> of
+                <span className="text-primary-green font-semibold">99% </span> of
                 buyers have recommeded this.
               </p>
             </div>
