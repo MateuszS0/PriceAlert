@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { getLowestPrice, getHighestPrice, getAveragePrice} from "@/lib/utils";
-// import {getEmailNotifType} from "@/lib/utils";
+import {getEmailNotifType} from "@/lib/utils";
 import { connectToDB } from "@/lib/scraper/mongoose";
 import Product from "@/models/product.model";
 import { scrapeAmazonProduct } from "@/lib/scraper/scraper";
@@ -48,21 +48,21 @@ export async function GET(request: Request) {
           product
         );
 
-        //check status and send email notif
-        // const emailNotifType = getEmailNotifType(
-        //   scrapedProduct,
-        //   currentProduct
-        // );
+        // check status and send email notif
+        const emailNotifType = getEmailNotifType(
+          scrapedProduct,
+          currentProduct
+        );
 
-        // if (emailNotifType && updatedProduct.users.length > 0) {
-        //   const productInfo = {
-        //     title: updatedProduct.title,
-        //     url: updatedProduct.url,
-        //   };
-        //   const emailContent = await generateEmailBody(productInfo, emailNotifType);
-        //   const userEmails = updatedProduct.users.map((user: any) => user.email);
-        //   await sendEmail(emailContent, userEmails);
-        // }
+        if (emailNotifType && updatedProduct.users.length > 0) {
+          const productInfo = {
+            title: updatedProduct.title,
+            url: updatedProduct.url,
+          };
+          const emailContent = await generateEmailBody(productInfo, emailNotifType);
+          const userEmails = updatedProduct.users.map((user: any) => user.email);
+          await sendEmail(emailContent, userEmails);
+        }
 
         return updatedProduct;
       })
