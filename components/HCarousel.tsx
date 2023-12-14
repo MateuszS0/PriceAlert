@@ -4,10 +4,10 @@ import { Carousel } from "react-responsive-carousel"
 import Image from "next/image"
 
 const HImage = [
-  {imgUrl: '/assets/images/hero-2.svg', alt: 'bag'},
-  {imgUrl: '/assets/images/hero-1.svg', alt: 'smartwatch'},
+  {imgUrl: '/assets/images/7900xtx.png', alt: 'AMD GPU'},
+  {imgUrl: '/assets/images/threadripper.png', alt: 'AMD Cpu'},
   {imgUrl: '/assets/images/hero-3.svg', alt: 'lamp'},
-  {imgUrl: '/assets/images/hero-4.svg', alt: 'air fryer'},
+  {imgUrl: '/assets/images/hero-2.svg', alt: 'bag'},
   {imgUrl: '/assets/images/hero-5.svg', alt: 'chair'}
 ]
 
