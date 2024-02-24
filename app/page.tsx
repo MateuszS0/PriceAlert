@@ -12,7 +12,7 @@ const Home = async () => {
 
   return (
     <>
-    <section className='px-6 md:px-20 py-24'>
+    <section className='px-6 md:px-16 py-1'>
       <div className="flex max-xl:flex-col">
         <div className="flex flex-col justify-center">
           
