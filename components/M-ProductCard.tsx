@@ -11,6 +11,7 @@ const ProductCard = ({product}: Props) => {
   return (
     <Link href={`/${product._id}`} className='product-card'>
         <div className="product-card_img-container">
+            {/* <div className='w-full flex justify-between'><span className="text-blue-500">Link placeholder</span><button className='z-20'>Refresh</button></div> */}
             <Image
                 src={product.image}
                 alt={product.title}

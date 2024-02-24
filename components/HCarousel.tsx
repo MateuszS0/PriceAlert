@@ -17,7 +17,7 @@ const HCarousel = () => {
     <Carousel showThumbs={false} 
     autoPlay 
     infiniteLoop 
-    interval={2000} 
+    interval={5000} 
     showArrows={false}
     showStatus={false}>
       {HImage.map((image) => (
@@ -31,13 +31,6 @@ const HCarousel = () => {
         />
       ))}
     </Carousel>
-    <Image
-    src="assets/icons/hand-drawn-arrow.svg"
-    alt="arrow"
-    width={170}
-    height={170}
-    className="max-xl:hidden absolute -left-[15%] bottom-0 z-0"
-    />
   </div>
   )
 }
