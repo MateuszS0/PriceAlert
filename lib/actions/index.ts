@@ -9,20 +9,20 @@ import { generateEmailBody, sendEmail } from "../nodemailer";
 import { User } from '../../types/index';
 
 export async function scrapeAndStoreProduct(productUrl: string) {
-  if(!productUrl) return;
+  if (!productUrl) return;
 
   try {
     connectToDB();
 
     const scrapedProduct = await scrapeAmazonProduct(productUrl);
 
-    if(!scrapedProduct) return;
+    if (!scrapedProduct) return;
 
     let product = scrapedProduct;
 
     const existingProduct = await Product.findOne({ url: scrapedProduct.url });
 
-    if(existingProduct) {
+    if (existingProduct) {
       const updatedPriceHistory: any = [
         ...existingProduct.priceHistory,
         { price: scrapedProduct.currentPrice }
@@ -49,13 +49,61 @@ export async function scrapeAndStoreProduct(productUrl: string) {
   }
 }
 
+// export async function manuallyUpdateProduct(productId: string) {
+//   try {
+//     connectToDB();
+
+//     const product = await Product.findOne({ _id: productId });
+
+//     if (!product) {
+//       console.log("Product not found");
+//       return null;
+//     }
+
+//     // Scrape updated information from Amazon using the product's URL
+//     const scrapedProduct = await scrapeAmazonProduct(product.url);
+
+//     if (!scrapedProduct) {
+//       console.log("Failed to scrape updated information from Amazon");
+//       return null;
+//     }
+
+//     // Update the product with the newly scraped info
+//     const updatedProduct = {
+//       ...scrapedProduct,
+//       priceHistory: [
+//         ...product.priceHistory,
+//         { price: scrapedProduct.currentPrice },
+//       ],
+//       lowestPrice: getLowestPrice([...product.priceHistory, { price: scrapedProduct.currentPrice }]),
+//       highestPrice: getHighestPrice([...product.priceHistory, { price: scrapedProduct.currentPrice }]),
+//       averagePrice: getAveragePrice([...product.priceHistory, { price: scrapedProduct.currentPrice }]),
+//     };
+
+//     // Update the product in the database
+//     const updatedProductInDB = await Product.findOneAndUpdate(
+//       { _id: productId },
+//       updatedProduct,
+//       { new: true }
+//     );
+
+//     console.log("Updated product:", updatedProductInDB);
+
+//     return updatedProductInDB;
+
+//   } catch (error: any) {
+//     console.log("Failed to update:", error.message);
+//     throw new Error(`Failed to update product: ${error.message}`);
+//   }
+// }
+
 export async function getProductById(productId: string) {
   try {
     connectToDB();
 
     const product = await Product.findOne({ _id: productId });
 
-    if(!product) return null;
+    if (!product) return null;
 
     return product;
   } catch (error) {
@@ -81,7 +129,7 @@ export async function getSimilarProducts(productId: string) {
 
     const currentProduct = await Product.findById(productId);
 
-    if(!currentProduct) return null;
+    if (!currentProduct) return null;
 
     const similarProducts = await Product.find({
       _id: { $ne: productId }, //not equal to productId
@@ -96,11 +144,11 @@ export async function addUserEmailToProduct(productId: string, userEmail: string
   try {
     const product = await Product.findById(productId);
 
-    if(!product) return;
+    if (!product) return;
 
     const userExists = product.users.some((user: User) => user.email === userEmail);
 
-    if(!userExists) {
+    if (!userExists) {
       product.users.push({ email: userEmail });
 
       await product.save();
