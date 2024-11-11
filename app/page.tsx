@@ -35,15 +35,21 @@ const Home = async () => {
           <HCarousel />
         </div>
       </section>
+      <section className="groups-section">
+        <h2 className="section-text">Your Groups</h2>
+        <div className="grouped-items flex flex-wrap gap-2 max-w-[400px]">
+          {allProducts?.slice(0, 4).map((product) => (
+            <ProductCard key={product._id} product={product} isGrouped />
+          ))}
+        </div>
+      </section>
 
-
-      <section className='products-section'>
-        <h2 className='section-text'>Your products</h2>
-        <div className='flex flex-wrap gap-x-8 gap-y-16'>
+      <section className="products-section">
+        <h2 className="section-text">Your Products</h2>
+        <div className="standard-layout flex flex-wrap gap-4">
           {allProducts?.map((product) => (
             <ProductCard key={product._id} product={product} />
           ))}
-
         </div>
       </section>
     </>
