@@ -5,12 +5,12 @@ import * as cheerio from 'cheerio';
 import { extractCurrency, extractDescription, extractPrice } from '../utils';
 
 export async function scrapeAmazonProduct(url: string) {
-  if(!url) return;
+  if (!url) return;
 
   // BrightData proxy configuration
   const username = String(process.env.BRIGHT_DATA_USERNAME);
   const password = String(process.env.BRIGHT_DATA_PASSWORD);
-  const port = 22225;
+  const port = String(process.env.BRIGHT_DATA_PORT);
   const session_id = (1000000 * Math.random()) | 0;
 
   const options = {
@@ -49,8 +49,8 @@ export async function scrapeAmazonProduct(url: string) {
 
     const outOfStock = $('#availability span').text().trim().toLowerCase() === 'currently unavailable';
 
-    const images = 
-      $('#imgBlkFront').attr('data-a-dynamic-image') || 
+    const images =
+      $('#imgBlkFront').attr('data-a-dynamic-image') ||
       $('#landingImage').attr('data-a-dynamic-image') ||
       '{}'
 
@@ -72,7 +72,7 @@ export async function scrapeAmazonProduct(url: string) {
       priceHistory: [],
       discountRate: Number(discountRate),
       category: 'category',
-      reviewsCount:100,
+      reviewsCount: 100,
       stars: 4.5,
       isOutOfStock: outOfStock,
       description,
