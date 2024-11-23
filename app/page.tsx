@@ -37,10 +37,55 @@ const Home = async () => {
       </section>
       <section className="groups-section">
         <h2 className="section-text">Your Groups</h2>
-        <div className="grouped-items flex flex-wrap gap-2 max-w-[400px]">
-          {allProducts?.slice(0, 4).map((product) => (
-            <ProductCard key={product._id} product={product} isGrouped />
-          ))}
+        <div className='groups-wrapper flex flex-row gap-16 justify-evenly'>
+          <div className='group-wrapper flex flex-wrap gap-2 max-w-[400px]'>
+            <div className='group-name-price'>
+              <h3 className='font-bold'>Group 1</h3>
+              <h3>
+                Lowest price:{" "}
+                {allProducts?.length
+                  ? Math.min(...allProducts.slice(0, 4).map((product) => product.currentPrice)) : "N/A"}
+              </h3>
+            </div>
+            <div className="grouped-items flex flex-wrap gap-2 max-w-[400px]">
+              {allProducts?.slice(0, 4).map((product) => (
+                <ProductCard key={product._id} product={product} isGrouped />
+              ))}
+            </div>
+          </div>
+
+
+          <div className='group-wrapper flex flex-wrap gap-2 max-w-[400px]'>
+            <div className='group-name-price'>
+              <h3 className='font-bold'>Group 1</h3>
+              <h3>
+                Lowest price:{" "}
+                {allProducts?.length
+                  ? Math.min(...allProducts.slice(4, 8).map((product) => product.currentPrice)) : "N/A"}
+              </h3>
+            </div>
+            <div className="grouped-items flex flex-wrap gap-2 max-w-[400px]">
+              {allProducts?.slice(4, 8).map((product) => (
+                <ProductCard key={product._id} product={product} isGrouped />
+              ))}
+            </div>
+          </div>
+
+          <div className='group-wrapper flex flex-wrap gap-2 max-w-[400px]'>
+            <div className='group-name-price'>
+              <h3 className='font-bold'>Group 1</h3>
+              <h3>
+                Lowest price:{" "}
+                {allProducts?.length
+                  ? Math.min(...allProducts.slice(8, 12).map((product) => product.currentPrice)) : "N/A"}
+              </h3>
+            </div>
+            <div className="grouped-items flex flex-wrap gap-2 max-w-[400px]">
+              {allProducts?.slice(8, 12).map((product) => (
+                <ProductCard key={product._id} product={product} isGrouped />
+              ))}
+            </div>
+          </div>
         </div>
       </section>
 

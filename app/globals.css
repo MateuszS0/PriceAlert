@@ -151,8 +151,13 @@
   }
 
   /* GROUPED PRODUCT CARDS */
+
+
   .grouped-card {
-    @apply w-48 p-2 m-0;
+    @apply w-48 p-2 m-auto
+  }
+  .group-name-price {
+    @apply flex flex-row justify-stretch gap-4
   }
   
 }
