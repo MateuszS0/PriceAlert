@@ -11,7 +11,8 @@
 
 @layer base {
   body {
-    @apply font-inter;
+    @apply font-inter bg-orange-500/25;
+    /* or bg-green-400/25 */
   }
 }
 
@@ -151,13 +152,15 @@
   }
 
   /* GROUPED PRODUCT CARDS */
-
+  .group-wrapper {
+    @apply w-full bg-[#F2F4F7] rounded-[30px] sm:mx-auto;
+  }
 
   .grouped-card {
-    @apply w-48 p-2 m-auto
+    @apply w-40 m-auto;
   }
+
   .group-name-price {
-    @apply flex flex-row justify-stretch gap-4
+    @apply flex flex-row justify-stretch gap-4 mt-8 ml-8;
   }
-  
 }

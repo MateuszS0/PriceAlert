@@ -3,15 +3,17 @@ import { getLowestPrice, getHighestPrice, getAveragePrice } from "@/lib/utils";
 import { getEmailNotifType } from "@/lib/utils";
 import { connectToDB } from "@/lib/scraper/mongoose";
 import Product from "@/models/product.model";
-import { scrapeAmazonProduct } from "@/lib/scraper/scraper";
+import { scrapeAmazonProduct } from "@/lib/scraper/scraperAmazon";
 import { generateEmailBody, sendEmail } from "@/lib/nodemailer";
+import { scraperFactory } from "@/lib/scraper/scraperFactory";
 
-export const maxDuration = 40;
+export const maxDuration = 30;
 export const dynamic = "force-dynamic";
 export const revalidate = 0;
 
 export async function GET(request: Request) {
   try {
+    // Connect to the database
     connectToDB();
 
     const products = await Product.find({});
@@ -20,8 +22,11 @@ export async function GET(request: Request) {
 
     const updatedProducts = await Promise.all(
       products.map(async (currentProduct) => {
-        // Scrape product
-        const scrapedProduct = await scrapeAmazonProduct(currentProduct.url);
+        // Use scraperFactory to select the scraper dynamically
+        const scraper = scraperFactory(currentProduct.url);
+
+        // Scrape the product
+        const scrapedProduct = await scraper(currentProduct.url);
 
         if (!scrapedProduct) return;
 
@@ -40,7 +45,7 @@ export async function GET(request: Request) {
           averagePrice: getAveragePrice(updatedPriceHistory),
         };
 
-        // Update Products in DB
+        // Update the product in the database
         const updatedProduct = await Product.findOneAndUpdate(
           {
             url: product.url,
@@ -48,7 +53,7 @@ export async function GET(request: Request) {
           product
         );
 
-        // check status and send email notif
+        // Check status and send email notifications if applicable
         const emailNotifType = getEmailNotifType(
           scrapedProduct,
           currentProduct
@@ -68,6 +73,7 @@ export async function GET(request: Request) {
       })
     );
 
+    // Return a successful response
     return NextResponse.json({
       message: "Ok",
       data: updatedProducts,

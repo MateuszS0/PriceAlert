@@ -41,6 +41,7 @@ const Home = async () => {
           <div className='group-wrapper flex flex-wrap gap-2 max-w-[400px]'>
             <div className='group-name-price'>
               <h3 className='font-bold'>Group 1</h3>
+              {/* placeholder groupname until we map through products for groups */}
               <h3>
                 Lowest price:{" "}
                 {allProducts?.length
@@ -57,7 +58,7 @@ const Home = async () => {
 
           <div className='group-wrapper flex flex-wrap gap-2 max-w-[400px]'>
             <div className='group-name-price'>
-              <h3 className='font-bold'>Group 1</h3>
+              <h3 className='font-bold'>Group 2</h3>
               <h3>
                 Lowest price:{" "}
                 {allProducts?.length
@@ -73,15 +74,15 @@ const Home = async () => {
 
           <div className='group-wrapper flex flex-wrap gap-2 max-w-[400px]'>
             <div className='group-name-price'>
-              <h3 className='font-bold'>Group 1</h3>
+              <h3 className='font-bold'>Group 3</h3>
               <h3>
                 Lowest price:{" "}
                 {allProducts?.length
-                  ? Math.min(...allProducts.slice(8, 12).map((product) => product.currentPrice)) : "N/A"}
+                  ? Math.min(...allProducts.slice(7, 10).map((product) => product.currentPrice)) : "N/A"}
               </h3>
             </div>
             <div className="grouped-items flex flex-wrap gap-2 max-w-[400px]">
-              {allProducts?.slice(8, 12).map((product) => (
+              {allProducts?.slice(7, 10).map((product) => (
                 <ProductCard key={product._id} product={product} isGrouped />
               ))}
             </div>

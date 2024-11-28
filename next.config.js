@@ -4,8 +4,9 @@ const nextConfig = {
       // serverActions: true,
       serverComponentsExternalPackages: ['mongoose']
     },
+    // to get images we have to give domain url.
     images: {
-      domains: ['m.media-amazon.com']
+      domains: ['m.media-amazon.com', "ebay.pl"]
     }
   }
   

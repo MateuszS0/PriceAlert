@@ -14,20 +14,20 @@ export function extractPrice(...elements: any) {
   for (const element of elements) {
     const priceText = element.text().trim();
     console.log(priceText);
-    
+
     if (priceText) {
       const cleanPrice = priceText.replace(/[^\d,]/g, '').replace(',', '.');
-    
+
       let firstPrice;
-    
+
       if (cleanPrice) {
         firstPrice = cleanPrice.match(/\d+\.\d{2}/)?.[0];
       }
-    
+
       if (firstPrice) {
         return firstPrice;
       }
-    
+
       return firstPrice || cleanPrice;
     }
   }
@@ -92,7 +92,7 @@ export function getLowestPrice(priceList: PriceHistoryItem[]) {
 export function getAveragePrice(priceList: PriceHistoryItem[]) {
   const sumOfPrices = priceList.reduce((acc, curr) => acc + curr.price, 0);
   const averagePrice = sumOfPrices / priceList.length || 0;
-  
+
 
   return averagePrice;
 }

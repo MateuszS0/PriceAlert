@@ -2,15 +2,17 @@
 
 import { scrapeAndStoreProduct } from "@/lib/actions"
 import { FormEvent, useState } from "react"
-const isValidAmazonProductURL = (url: string) => {
+const isValidProductURL = (url: string) => {
   try {
     const parsedURL = new URL(url)
-    const hostname = parsedURL.hostname 
-    if(hostname.includes("amazon.com") || 
-    hostname.includes("www.amazon.") || 
-    hostname.endsWith("amazon")) {
+    const hostname = parsedURL.hostname
+    if (hostname.includes("amazon.com") || hostname.includes("www.amazon.") || hostname.endsWith("amazon") ||
+      (hostname.includes("ebay.pl") || hostname.includes("www.ebay.") || hostname.endsWith("ebay"))
+    ) {
+      console.log("host name: " + hostname);
       return true;
-  }} catch (error) {
+    }
+  } catch (error) {
     return false;
   }
   return false;
@@ -22,7 +24,7 @@ const Searchbar = () => {
 
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    const isValidLink = isValidAmazonProductURL(searchPrompt);
+    const isValidLink = isValidProductURL(searchPrompt);
     if (!isValidLink) return alert("Provide a valid URL");
     try {
       SetisLoading(true)
@@ -30,26 +32,26 @@ const Searchbar = () => {
       const product = await scrapeAndStoreProduct(searchPrompt);
     } catch (error) {
       console.log(error);
-      
+
     } finally {
       SetisLoading(false)
     }
   }
-  
+
   return (
     <form className='flex flex-wrap gap-4 m4-12' onSubmit={handleSubmit}>
       <input type="text"
-      value={searchPrompt}
-      onChange={(e)=> {
-        SetsearchPrompt(e.target.value)
-        
-      }}
-      placeholder="Enter product link"
-      className="searchbar-input" />
-      <button 
-      type="submit" 
-      className="searchbar-btn"
-      disabled = {searchPrompt === '' }
+        value={searchPrompt}
+        onChange={(e) => {
+          SetsearchPrompt(e.target.value)
+
+        }}
+        placeholder="Enter product link"
+        className="searchbar-input" />
+      <button
+        type="submit"
+        className="searchbar-btn"
+        disabled={searchPrompt === ''}
       >{isLoading ? 'Searching...' : 'Search'}
       </button>
 

@@ -24,10 +24,12 @@ export async function scrapeAmazonProduct(url: string) {
   }
 
   try {
+    console.log("url: " + url);
     // Fetch the product page
     const response = await axios.get(url, options);
     const $ = cheerio.load(response.data);
 
+    console.log("parsed response amazon: " + $);
     // Extract the product title
     const title = $('#productTitle').text().trim();
     const currentPrice = extractPrice(
