@@ -6,7 +6,7 @@ const nextConfig = {
     },
     // to get images we have to give domain url.
     images: {
-      domains: ['m.media-amazon.com', "ebay.pl"]
+      domains: ['m.media-amazon.com', "i.ebayimg.com"]
     }
   }
   

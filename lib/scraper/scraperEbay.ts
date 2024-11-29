@@ -33,61 +33,58 @@ export async function scrapeEbayProduct(url: string) {
 
 
         // Extract the product title
-        // const title = $('.mp4t_0').text().trim();
-        // console.log("allegro title:" + title);
+        const title = $(".x-item-title").text().trim();
+        console.log("ebay title:" + title);
 
-        //     const currentPrice = extractPrice(
-        //         $('.priceToPay span.a-price-whole'),
-        //         $('.a.size.base.a-color-price'),
-        //         $('.a-button-selected .a-color-base').first()
-        //     );
+        const currentPrice = extractPrice(
+            $(".x-price-primary"),
+            $("span.ux-textspans").first()
+        );
+        console.log("Price: " + currentPrice);
 
-        //     const originalPrice = extractPrice(
-        //         $('#priceblock_ourprice'),
-        //         $('.a-price.a-text-price span.a-offscreen'),
-        //         $('#listPrice'),
-        //         $('#priceblock_dealprice'),
-        //         $('.a-size-base.a-color-price').first()
-        //     );
-        //     const priceFraction = extractPrice(
-        //         $('span.a-price-fraction').first()
-        //     )
 
-        //     const outOfStock = $('#availability span').text().trim().toLowerCase() === 'currently unavailable';
+        const originalPrice = currentPrice;
+        console.log("original price: " + originalPrice);
 
-        //     const images =
-        //         $('#imgBlkFront').attr('data-a-dynamic-image') ||
-        //         $('#landingImage').attr('data-a-dynamic-image') ||
-        //         '{}'
+        const outOfStock = $('#availability span').text().trim().toLowerCase() === 'currently unavailable';
 
-        //     const imageUrls = Object.keys(JSON.parse(images));
+        const image =
+            $('.ux-image-carousel-item img').attr('data-zoom-src') ||
+            '{}'
+        console.log("img: " + image);
 
-        //     const currency = extractCurrency($('.a-price-symbol'))
-        //     const discountRate = $('.savingsPercentage').text().replace(/[-%]/g, "");
 
-        //     const description = extractDescription($)
+        // const imageUrls = Object.keys(JSON.parse(images));
 
-        //     // Construct data object with scraped information
-        // const data = {
-        //     url,
-        //     // currency: currency || 'zl',
-        //     // image: imageUrls[0],
-        //     title,
-        //     // currentPrice: Number(currentPrice) || Number(originalPrice),
-        //     // originalPrice: Number(originalPrice) || Number(currentPrice),
-        //     priceHistory: [],
-        //     // discountRate: Number(discountRate),
-        //     category: 'category',
-        //     reviewsCount: 100,
-        //     stars: 4.5,
-        //     // isOutOfStock: outOfStock,
-        //     // description,
-        //     // lowestPrice: Number(currentPrice) || Number(originalPrice),
-        //     // highestPrice: Number(originalPrice) || Number(currentPrice),
-        //     // averagePrice: Number(currentPrice) || Number(originalPrice),
-        // }
+        const currency = $(".x-price-primary").text().trim().split(' ')
+            .find(part => /^[^\d.,]+$/.test(part)); //finds part without numbers, commas and dots
+        console.log("curr: " + currency);
 
-        //     return data;
+        // const discountRate = $('.savings').text().replace(/[-%]/g, "");
+
+        // const description = extractDescription($)
+
+        // Construct data object with scraped information
+        const data = {
+            url,
+            currency: currency || 'zl',
+            image: image,
+            title,
+            currentPrice: Number(currentPrice) || Number(originalPrice),
+            originalPrice: Number(originalPrice) || Number(currentPrice),
+            priceHistory: [],
+            // discountRate: Number(discountRate),
+            category: 'category',
+            reviewsCount: 100,
+            stars: 4.5,
+            isOutOfStock: outOfStock,
+            // description,
+            lowestPrice: Number(currentPrice) || Number(originalPrice),
+            highestPrice: Number(originalPrice) || Number(currentPrice),
+            averagePrice: Number(currentPrice) || Number(originalPrice),
+        }
+        // for testing, comment data (wont be uploaded to database)
+        return data;
     } catch (error: any) {
         console.log(error);
     }
