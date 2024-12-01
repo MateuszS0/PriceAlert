@@ -126,8 +126,14 @@
   }
 
   /* PRODUCT CARD */
+
+  .product-wrapper {
+    /* "more options" icon on the top-right side of the product to move products to groups */
+    @apply flex flex-col items-end;
+  }
   .product-card {
-    @apply sm:w-[292px] sm:max-w-[292px] w-full flex-1 flex flex-col gap-4 rounded-md;
+    @apply sm:w-[300px] sm:max-w-[300px] w-full flex-1 flex flex-col gap-4 rounded-md;
+    /* maybe use clamp, same for grouped-card */
   }
 
   .product-card_img-container {
@@ -153,14 +159,19 @@
 
   /* GROUPED PRODUCT CARDS */
   .group-wrapper {
-    @apply w-full bg-[#F2F4F7] rounded-[30px] sm:mx-auto;
+    @apply w-full h-auto bg-[#F2F4F7] rounded-[30px] sm:mx-auto;
+  }
+
+  .group-name-price {
+    @apply flex flex-row items-center justify-around text-sm mt-4 gap-2;
+  }
+
+  .grouped-items {
+    @apply grid grid-cols-2 grid-rows-2 gap-2 mx-auto max-w-[400px];
   }
 
   .grouped-card {
     @apply w-40 m-auto;
-  }
-
-  .group-name-price {
-    @apply flex flex-row justify-stretch gap-4 mt-8 ml-8;
+    /* @apply w-40 rounded-lg shadow-sm; */
   }
 }
