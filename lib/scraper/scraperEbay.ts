@@ -33,7 +33,7 @@ export async function scrapeEbayProduct(url: string) {
 
 
         // Extract the product title
-        const title = $(".x-item-title").text().trim();
+        const title = $(".x-item-title__mainTitle span.ux-textspans--BOLD").text().trim();
         console.log("ebay title:" + title);
 
         const currentPrice = extractPrice(
