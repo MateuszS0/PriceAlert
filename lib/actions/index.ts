@@ -18,6 +18,11 @@ export async function scrapeAndStoreProduct(productUrl: string) {
     const scraper = scraperFactory(productUrl);
     const scrapedProduct = await scraper(productUrl);
 
+    if (scrapedProduct.isOutOfStock) {
+      console.log("Product is out of stock");
+      return;
+    }
+
     // const scrapedProduct = await scrapeAmazonProduct(productUrl);
 
     if (!scrapedProduct) return;
@@ -25,6 +30,10 @@ export async function scrapeAndStoreProduct(productUrl: string) {
     let product = scrapedProduct;
 
     const existingProduct = await Product.findOne({ url: scrapedProduct.url });
+
+    console.log('Scraped Product:', scrapedProduct);
+    console.log('Existing Product:', existingProduct);
+    // console.log('Product:', product);
 
     if (existingProduct) {
       const updatedPriceHistory: any = [
