@@ -36,7 +36,7 @@ export async function scrapeEbayProduct(url: string) {
         const title = $(".x-item-title__mainTitle span.ux-textspans--BOLD").text().trim();
         console.log("ebay title:" + title);
 
-        const currentPrice = extractPrice(
+        let currentPrice = extractPrice(
             $(".x-price-primary"),
             $("span.ux-textspans").first()
         );
@@ -46,7 +46,12 @@ export async function scrapeEbayProduct(url: string) {
         const originalPrice = currentPrice;
         console.log("original price: " + originalPrice);
 
-        const outOfStock = $('#availability span').text().trim().toLowerCase() === 'currently unavailable';
+        let outOfStock = $('#availability span').text().trim().toLowerCase() === 'currently unavailable';
+
+        if (currentPrice == 0 || currentPrice === null) {
+            outOfStock = true;
+            currentPrice = null;
+        }
 
         const image =
             $('.ux-image-carousel-item img').attr('data-zoom-src') ||
@@ -83,7 +88,9 @@ export async function scrapeEbayProduct(url: string) {
             highestPrice: Number(originalPrice) || Number(currentPrice),
             averagePrice: Number(currentPrice) || Number(originalPrice),
         }
-        // for testing, comment data (wont be uploaded to database)
+        // for testing, comment out "return data" (wont be uploaded to database)
+        // console.log("data: " + data);
+
         return data;
     } catch (error: any) {
         console.log(error);

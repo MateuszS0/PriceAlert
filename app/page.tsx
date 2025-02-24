@@ -38,25 +38,37 @@ const Home = async () => {
       <section className="groups-section">
         <h2 className="section-text">Your Groups</h2>
         <div className='groups-wrapper flex flex-row gap-16 justify-evenly'>
-          <div className='group-wrapper flex flex-wrap gap-2 max-w-[400px]'>
+          <div className='group-wrapper'>
             <div className='group-name-price'>
               <h3 className='font-bold'>Group 1</h3>
               {/* placeholder groupname until we map through products for groups */}
               <h3>
                 Lowest price:{" "}
                 {allProducts?.length
-                  ? Math.min(...allProducts.slice(0, 4).map((product) => product.currentPrice)) : "N/A"}
+                  ? Math.min(...allProducts.slice(0, 3).map((product) => product.currentPrice)) : "N/A"}
               </h3>
             </div>
-            <div className="grouped-items flex flex-wrap gap-2 max-w-[400px]">
-              {allProducts?.slice(0, 4).map((product) => (
-                <ProductCard key={product._id} product={product} isGrouped />
-              ))}
+            <div className="grouped-items">
+              {allProducts?.slice(0, 3).map((product) => {
+                // adding index with product breaks it, look into it
+                return (
+                  <ProductCard
+                    key={product._id}
+                    productRouteID={product._id}
+                    title={product.title}
+                    price={product.currentPrice}
+                    currency={product.currency}
+                    url={product.url}
+                    image={product.image} // Assuming image is also a prop of product
+                    isGrouped
+                  />
+                );
+              })}
             </div>
           </div>
 
 
-          <div className='group-wrapper flex flex-wrap gap-2 max-w-[400px]'>
+          <div className='group-wrapper'>
             <div className='group-name-price'>
               <h3 className='font-bold'>Group 2</h3>
               <h3>
@@ -65,26 +77,48 @@ const Home = async () => {
                   ? Math.min(...allProducts.slice(4, 8).map((product) => product.currentPrice)) : "N/A"}
               </h3>
             </div>
-            <div className="grouped-items flex flex-wrap gap-2 max-w-[400px]">
-              {allProducts?.slice(4, 8).map((product) => (
-                <ProductCard key={product._id} product={product} isGrouped />
-              ))}
+            <div className="grouped-items">
+              {allProducts?.slice(4, 8).map((product) => {
+                return (
+                  <ProductCard
+                    key={product._id}
+                    productRouteID={product._id}
+                    title={product.title}
+                    price={product.currentPrice}
+                    currency={product.currency}
+                    url={product.url}
+                    image={product.image} // Assuming image is also a prop of product
+                    isGrouped
+                  />
+                );
+              })}
             </div>
           </div>
 
-          <div className='group-wrapper flex flex-wrap gap-2 max-w-[400px]'>
+          <div className='group-wrapper'>
             <div className='group-name-price'>
               <h3 className='font-bold'>Group 3</h3>
               <h3>
                 Lowest price:{" "}
                 {allProducts?.length
-                  ? Math.min(...allProducts.slice(7, 10).map((product) => product.currentPrice)) : "N/A"}
+                  ? Math.min(...allProducts.slice(8, 10).map((product) => product.currentPrice)) : "N/A"}
               </h3>
             </div>
-            <div className="grouped-items flex flex-wrap gap-2 max-w-[400px]">
-              {allProducts?.slice(7, 10).map((product) => (
-                <ProductCard key={product._id} product={product} isGrouped />
-              ))}
+            <div className="grouped-items">
+              {allProducts?.slice(8, 10).map((product) => {
+                return (
+                  <ProductCard
+                    key={product._id}
+                    productRouteID={product._id}
+                    title={product.title}
+                    price={product.currentPrice}
+                    currency={product.currency}
+                    url={product.url}
+                    image={product.image} // Assuming image is also a prop of product
+                    isGrouped
+                  />
+                );
+              })}
             </div>
           </div>
         </div>
@@ -93,9 +127,19 @@ const Home = async () => {
       <section className="products-section">
         <h2 className="section-text">Your Products</h2>
         <div className="standard-layout flex flex-wrap gap-4">
-          {allProducts?.map((product) => (
-            <ProductCard key={product._id} product={product} />
-          ))}
+          {allProducts?.map((product) => {
+            return (
+              <ProductCard
+                key={product._id}
+                productRouteID={product._id}
+                title={product.title}
+                price={product.currentPrice}
+                currency={product.currency}
+                url={product.url}
+                image={product.image} // Assuming image is also a prop of product
+              />
+            );
+          })}
         </div>
       </section>
     </>

@@ -5,7 +5,7 @@ import Product from "@/models/product.model";
 import { connectToDB } from "../scraper/mongoose";
 import { scrapeAmazonProduct } from "../scraper/scraperAmazon";
 import { getAveragePrice, getHighestPrice, getLowestPrice } from "../utils";
-import { generateEmailBody, sendEmail } from "../nodemailer";
+// import { generateEmailBody, sendEmail } from "../nodemailer";
 import { User } from '../../types/index';
 import { scraperFactory } from "../scraper/scraperFactory";
 
@@ -153,24 +153,24 @@ export async function getSimilarProducts(productId: string) {
     console.log(error);
   }
 }
-export async function addUserEmailToProduct(productId: string, userEmail: string) {
-  try {
-    const product = await Product.findById(productId);
+// export async function addUserEmailToProduct(productId: string, userEmail: string) {
+//   try {
+//     const product = await Product.findById(productId);
 
-    if (!product) return;
+//     if (!product) return;
 
-    const userExists = product.users.some((user: User) => user.email === userEmail);
+//     const userExists = product.users.some((user: User) => user.email === userEmail);
 
-    if (!userExists) {
-      product.users.push({ email: userEmail });
+//     if (!userExists) {
+//       product.users.push({ email: userEmail });
 
-      await product.save();
+//       await product.save();
 
-      const emailContent = await generateEmailBody(product, "WELCOME");
+//       const emailContent = await generateEmailBody(product, "WELCOME");
 
-      await sendEmail(emailContent, [userEmail]);
-    }
-  } catch (error) {
-    console.log(error);
-  }
-}
+//       await sendEmail(emailContent, [userEmail]);
+//     }
+//   } catch (error) {
+//     console.log(error);
+//   }
+// }

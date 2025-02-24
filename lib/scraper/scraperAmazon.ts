@@ -2,7 +2,7 @@
 
 import axios from 'axios';
 import * as cheerio from 'cheerio';
-import { extractCurrency, extractDescription, extractPrice } from '../utils';
+import { extractCurrency, extractDescription, extractPrice, extractReviews } from '../utils';
 
 export async function scrapeAmazonProduct(url: string) {
   if (!url) return;
@@ -32,7 +32,7 @@ export async function scrapeAmazonProduct(url: string) {
     console.log("parsed response amazon: " + $);
     // Extract the product title
     const title = $('#productTitle').text().trim();
-    const currentPrice = extractPrice(
+    let currentPrice = extractPrice(
       $('.priceToPay span.a-price-whole'),
       $('.a.size.base.a-color-price'),
       $('.a-button-selected .a-color-base').first()
@@ -45,16 +45,22 @@ export async function scrapeAmazonProduct(url: string) {
       $('#priceblock_dealprice'),
       $('.a-size-base.a-color-price').first()
     );
-    const priceFraction = extractPrice(
-      $('span.a-price-fraction').first()
-    )
+    // const priceFraction = extractPrice(
+    //   $('span.a-price-fraction').first()
+    // )
 
-    const outOfStock = $('#availability span').text().trim().toLowerCase() === 'currently unavailable';
+    let outOfStock = $('#availability span').text().trim().toLowerCase() === 'currently unavailable';
 
     const images =
       $('#imgBlkFront').attr('data-a-dynamic-image') ||
       $('#landingImage').attr('data-a-dynamic-image') ||
       '{}'
+
+    // const reviewsCount = extractReviews(
+    //   $('#averageCustomerReviews')
+
+
+    // )
 
     const imageUrls = Object.keys(JSON.parse(images));
 
@@ -64,6 +70,20 @@ export async function scrapeAmazonProduct(url: string) {
     const description = extractDescription($)
 
     // Construct data object with scraped information
+
+    if (outOfStock || currentPrice == 0 || currentPrice === null) {
+      console.log("Item is out of stock.");
+      const data = {
+        url,
+        image: imageUrls[0],
+        title,
+        priceHistory: [],
+        isOutOfStock: true,
+        description,
+      };
+      return data;
+    }
+
     const data = {
       url,
       currency: currency || 'zl',
@@ -82,7 +102,7 @@ export async function scrapeAmazonProduct(url: string) {
       highestPrice: Number(originalPrice) || Number(currentPrice),
       averagePrice: Number(currentPrice) || Number(originalPrice),
     }
-
+    // console.log("data: " + data.currentPrice);
     return data;
   } catch (error: any) {
     console.log(error);

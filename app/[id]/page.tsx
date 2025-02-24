@@ -5,9 +5,9 @@ import React from 'react'
 import Product from '../../models/product.model';
 import { formatNumber } from '@/lib/utils';
 import PriceInfoCard from '@/components/PriceInfoCard';
-import {redirect} from "next/navigation";
+import { redirect } from "next/navigation";
 import ProductCard from '@/components/M-ProductCard';
-import Modal from '@/components/Modal';
+// import Modal from '@/components/Modal';
 
 // scrape %
 type Props = {
@@ -77,10 +77,10 @@ const ProductDetails = async ({ params: { id } }: Props) => {
           <div className="product-info">
             <div className="flex flex-col gap-2">
               <p className="text-[34px] text-secondary font-bold">
-                 {formatNumber(product.currentPrice)} {product.currency}
+                {formatNumber(product.currentPrice)} {product.currency}
               </p>
               <p className="text-[21px] text-black opacity-50 line-through">
-                 {formatNumber(product.originalPrice)} {product.currency}
+                {formatNumber(product.originalPrice)} {product.currency}
               </p>
             </div>
 
@@ -112,7 +112,7 @@ const ProductDetails = async ({ params: { id } }: Props) => {
               </div>
 
               <p className="text-sm text-black opacity-50">
-                 {/* scrape the % */}
+                {/* scrape the % */}
                 <span className="text-primary-green font-semibold">99% </span> of
                 buyers have recommeded this.
               </p>
@@ -120,25 +120,25 @@ const ProductDetails = async ({ params: { id } }: Props) => {
           </div>
           <div className="my-7 flex flex-col gap-5">
             <div className="flex gap-5 flex-wrap">
-              <PriceInfoCard 
+              <PriceInfoCard
                 title="Current Price"
                 iconSrc="/assets/icons/price-tag.svg"
                 value={`${formatNumber(product.currentPrice)} ${product.currency} `}
                 borderColor='#b6dbff'
               />
-              <PriceInfoCard 
+              <PriceInfoCard
                 title="Average Price"
                 iconSrc="/assets/icons/chart.svg"
                 value={` ${formatNumber(product.averagePrice)} ${product.currency}`}
                 borderColor='#b6dbff'
               />
-              <PriceInfoCard 
+              <PriceInfoCard
                 title="Highest Price"
                 iconSrc="/assets/icons/arrow-up.svg"
                 value={` ${formatNumber(product.highestPrice)} ${product.currency}`}
                 borderColor='#b6dbff'
               />
-              <PriceInfoCard 
+              <PriceInfoCard
                 title="Lowest Price"
                 iconSrc="/assets/icons/arrow-down.svg"
                 value={` ${formatNumber(product.lowestPrice)} ${product.currency}`}
@@ -146,7 +146,7 @@ const ProductDetails = async ({ params: { id } }: Props) => {
               />
             </div>
           </div>
-          <Modal productId={id}/>
+          {/* <Modal productId={id} /> */}
         </div>
       </div>
       <div className="flex flex-col gap-16">
@@ -159,7 +159,7 @@ const ProductDetails = async ({ params: { id } }: Props) => {
           </div>
         </div>
         <button className="btn w-fit mx-auto flex items-center justify-center gap-3 min-w-[200px]">
-          <Image 
+          <Image
             src="/assets/icons/bag.svg"
             alt="check"
             width={22}
@@ -175,11 +175,11 @@ const ProductDetails = async ({ params: { id } }: Props) => {
         <div className="py-14 flex flex-col gap-2 w-full">
           <p className="section-text">Similar Products</p>
 
-          <div className="flex flex-wrap gap-10 mt-7 w-full">
+          {/* <div className="flex flex-wrap gap-10 mt-7 w-full">
             {similarProducts.map((product) => (
               <ProductCard key={product._id} product={product} />
             ))}
-          </div>
+          </div> */}
         </div>
       )}
 

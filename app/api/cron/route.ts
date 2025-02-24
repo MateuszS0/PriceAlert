@@ -4,7 +4,7 @@ import { getEmailNotifType } from "@/lib/utils";
 import { connectToDB } from "@/lib/scraper/mongoose";
 import Product from "@/models/product.model";
 import { scrapeAmazonProduct } from "@/lib/scraper/scraperAmazon";
-import { generateEmailBody, sendEmail } from "@/lib/nodemailer";
+// import { generateEmailBody, sendEmail } from "@/lib/nodemailer";
 import { scraperFactory } from "@/lib/scraper/scraperFactory";
 
 export const maxDuration = 30;
@@ -54,20 +54,20 @@ export async function GET(request: Request) {
         );
 
         // Check status and send email notifications if applicable
-        const emailNotifType = getEmailNotifType(
-          scrapedProduct,
-          currentProduct
-        );
+        // const emailNotifType = getEmailNotifType(
+        //   scrapedProduct,
+        //   currentProduct
+        // );
 
-        if (emailNotifType && updatedProduct.users.length > 0) {
-          const productInfo = {
-            title: updatedProduct.title,
-            url: updatedProduct.url,
-          };
-          const emailContent = await generateEmailBody(productInfo, emailNotifType);
-          const userEmails = updatedProduct.users.map((user: any) => user.email);
-          await sendEmail(emailContent, userEmails);
-        }
+        // if (emailNotifType && updatedProduct.users.length > 0) {
+        //   const productInfo = {
+        //     title: updatedProduct.title,
+        //     url: updatedProduct.url,
+        //   };
+        //   const emailContent = await generateEmailBody(productInfo, emailNotifType);
+        //   const userEmails = updatedProduct.users.map((user: any) => user.email);
+        //   await sendEmail(emailContent, userEmails);
+        // }
 
         return updatedProduct;
       })
