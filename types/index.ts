@@ -21,6 +21,7 @@ export type Product = {
   averagePrice: number;
   discountRate: number;
   description: string;
+  group: number;
   // category: string;
   reviewsCount: number;
   stars: number;

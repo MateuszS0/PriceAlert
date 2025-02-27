@@ -1,12 +1,13 @@
 "use client"
 // whatever breaks use client its after the products are mapped.
 // Too many things are passed into the Products because of priceHistory.
+// fix description length for products (cronjob)
 
 // grupowanie produktow statycznych z use client
 import { Product } from '@/types';
 import Image from 'next/image';
 import Link from 'next/link';
-import React, { useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import moreIcon from "../public/assets/icons/more.png"
 
 interface Props {
@@ -17,14 +18,44 @@ interface Props {
     image: Product["image"];
     productRouteID: Product["_id"]
     isGrouped?: boolean;
+    group: number;
 }
 
 const ProductCard = ({ title, price, url, currency, image, productRouteID, isGrouped = false }: Props) => {
+    const [dropdownVisible, setDropdownVisible] = useState(false);
+    const dropdownRef = useRef<HTMLDivElement>(null);
 
+    const toggleDropdown = () => {
+        setDropdownVisible(!dropdownVisible);
+    };
+
+    const handleClickOutside = (event: MouseEvent) => {
+        if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+            setDropdownVisible(false);
+        }
+    };
+
+    useEffect(() => {
+        document.addEventListener('mousedown', handleClickOutside);
+        return () => {
+            document.removeEventListener('mousedown', handleClickOutside);
+        };
+    }, []);
     return (
         <div className='product-wrapper'>
             {/* More icon for options */}
-            <Image className='w-4 h-4 cursor-pointer' src={moreIcon} alt='more' />
+            <div className='relative'>
+                <Image className='w-4 h-4 cursor-pointer' src={moreIcon} alt='more' onClick={toggleDropdown} />
+                {dropdownVisible && (
+                    <div ref={dropdownRef} className='absolute right-0 mt-2 w-48 bg-white border border-gray-200 rounded shadow-lg z-50'>
+                        <ul>
+                            <li className='px-4 py-2 hover:bg-gray-100 cursor-pointer'>Option 1</li>
+                            <li className='px-4 py-2 hover:bg-gray-100 cursor-pointer'>Option 2</li>
+                            <li className='px-4 py-2 hover:bg-gray-100 cursor-pointer'>Option 3</li>
+                        </ul>
+                    </div>
+                )}
+            </div>
 
             {/* Link to the product page */}
             <Link href={`/${productRouteID}`} className={`${isGrouped ? 'grouped-card' : 'product-card'}`}>

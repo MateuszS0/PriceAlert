@@ -1,13 +1,13 @@
 import { NextResponse } from "next/server";
 import { getLowestPrice, getHighestPrice, getAveragePrice } from "@/lib/utils";
-import { getEmailNotifType } from "@/lib/utils";
+// import { getEmailNotifType } from "@/lib/utils";
 import { connectToDB } from "@/lib/scraper/mongoose";
 import Product from "@/models/product.model";
 import { scrapeAmazonProduct } from "@/lib/scraper/scraperAmazon";
 // import { generateEmailBody, sendEmail } from "@/lib/nodemailer";
 import { scraperFactory } from "@/lib/scraper/scraperFactory";
 
-export const maxDuration = 30;
+export const maxDuration = 60;
 export const dynamic = "force-dynamic";
 export const revalidate = 0;
 
@@ -64,9 +64,9 @@ export async function GET(request: Request) {
         //     title: updatedProduct.title,
         //     url: updatedProduct.url,
         //   };
-        //   const emailContent = await generateEmailBody(productInfo, emailNotifType);
+        //   // const emailContent = await generateEmailBody(productInfo, emailNotifType);
         //   const userEmails = updatedProduct.users.map((user: any) => user.email);
-        //   await sendEmail(emailContent, userEmails);
+        //   // await sendEmail(emailContent, userEmails);
         // }
 
         return updatedProduct;
