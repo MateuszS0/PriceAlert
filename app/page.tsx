@@ -7,9 +7,11 @@ import ProductCard from '@/components/M-ProductCard'
 
 
 const Home = async () => {
-
   const allProducts = await getAllProducts();
   const groups = Array.from(new Set(allProducts?.filter(product => product.group !== 0).map(product => product.group)));
+
+  const nextGroupNumber = groups.length > 0 ? Math.max(...groups) + 1 : 1;
+  groups.push(nextGroupNumber);
 
   return (
     <>
@@ -61,66 +63,12 @@ const Home = async () => {
                     image={product.image}
                     isGrouped
                     group={product.group}
+                    availableGroups={groups}
                   />
                 ))}
               </div>
             </div>
           ))}
-
-
-          {/* <div className='group-wrapper'>
-            <div className='group-name-price'>
-              <h3 className='font-bold'>Group 2</h3>
-              <h3>
-                Lowest price:{" "}
-                {allProducts?.length
-                  ? Math.min(...allProducts.slice(4, 8).map((product) => product.currentPrice)) : "N/A"}
-              </h3>
-            </div>
-            <div className="grouped-items">
-              {allProducts?.slice(4, 8).map((product) => {
-                return (
-                  <ProductCard
-                    key={product._id}
-                    productRouteID={product._id}
-                    title={product.title}
-                    price={product.currentPrice}
-                    currency={product.currency}
-                    url={product.url}
-                    image={product.image} // Assuming image is also a prop of product
-                    isGrouped
-                  />
-                );
-              })}
-            </div>
-          </div>
-
-          <div className='group-wrapper'>
-            <div className='group-name-price'>
-              <h3 className='font-bold'>Group 3</h3>
-              <h3>
-                Lowest price:{" "}
-                {allProducts?.length
-                  ? Math.min(...allProducts.slice(8, 10).map((product) => product.currentPrice)) : "N/A"}
-              </h3>
-            </div>
-            <div className="grouped-items">
-              {allProducts?.slice(8, 10).map((product) => {
-                return (
-                  <ProductCard
-                    key={product._id}
-                    productRouteID={product._id}
-                    title={product.title}
-                    price={product.currentPrice}
-                    currency={product.currency}
-                    url={product.url}
-                    image={product.image} // Assuming image is also a prop of product
-                    isGrouped
-                  />
-                );
-              })}
-            </div>
-          </div> */}
         </div>
       </section>
 
@@ -138,6 +86,7 @@ const Home = async () => {
                 url={product.url}
                 image={product.image}
                 group={product.group}
+                availableGroups={groups}
               />
             );
           })}

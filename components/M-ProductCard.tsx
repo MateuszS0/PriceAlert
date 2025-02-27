@@ -7,8 +7,8 @@
 import { Product } from '@/types';
 import Image from 'next/image';
 import Link from 'next/link';
-import React, { useEffect, useRef, useState } from 'react'
-import moreIcon from "../public/assets/icons/more.png"
+import React, { useEffect, useRef, useState } from 'react';
+import moreIcon from "../public/assets/icons/more.png";
 
 interface Props {
     title: Product["title"];
@@ -16,13 +16,15 @@ interface Props {
     currency: Product["currency"];
     url: Product["url"];
     image: Product["image"];
-    productRouteID: Product["_id"]
+    productRouteID: Product["_id"];
     isGrouped?: boolean;
     group: number;
+    availableGroups: number[];
 }
 
-const ProductCard = ({ title, price, url, currency, image, productRouteID, isGrouped = false }: Props) => {
+const ProductCard = ({ title, price, url, currency, image, productRouteID, isGrouped = false, availableGroups }: Props) => {
     const [dropdownVisible, setDropdownVisible] = useState(false);
+    const [moveToVisible, setMoveToVisible] = useState(false);
     const dropdownRef = useRef<HTMLDivElement>(null);
 
     const toggleDropdown = () => {
@@ -32,6 +34,7 @@ const ProductCard = ({ title, price, url, currency, image, productRouteID, isGro
     const handleClickOutside = (event: MouseEvent) => {
         if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
             setDropdownVisible(false);
+            setMoveToVisible(false);
         }
     };
 
@@ -41,6 +44,36 @@ const ProductCard = ({ title, price, url, currency, image, productRouteID, isGro
             document.removeEventListener('mousedown', handleClickOutside);
         };
     }, []);
+
+    const handleMoveToHover = () => {
+        setMoveToVisible(true);
+    };
+
+    const handleMoveToLeave = () => {
+        setMoveToVisible(false);
+    };
+
+    const handleMoveToGroup = async (newGroup: number) => {
+        try {
+            const response = await fetch('/api/mongoGroup/updateGroup', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ productId: productRouteID, newGroup }),
+            });
+            console.log("moving to group: ", newGroup);
+
+            if (response.ok) {
+                console.log('Group updated successfully');
+            } else {
+                console.error('Failed to update group');
+            }
+        } catch (error) {
+            console.error('Error updating group:', error);
+        }
+    };
+
     return (
         <div className='product-wrapper'>
             {/* More icon for options */}
@@ -49,7 +82,20 @@ const ProductCard = ({ title, price, url, currency, image, productRouteID, isGro
                 {dropdownVisible && (
                     <div ref={dropdownRef} className='absolute right-0 mt-2 w-48 bg-white border border-gray-200 rounded shadow-lg z-50'>
                         <ul>
-                            <li className='px-4 py-2 hover:bg-gray-100 cursor-pointer'>Option 1</li>
+                            <li className='px-4 py-2 hover:bg-gray-100 cursor-pointer relative'
+                                onMouseEnter={handleMoveToHover}
+                                onMouseLeave={handleMoveToLeave}>
+                                Move to
+                                {moveToVisible && (
+                                    <ul className='absolute left-full top-0 mt-0 w-48 bg-white border border-gray-200 rounded shadow-lg z-50'>
+                                        {availableGroups.map(group => (
+                                            <li key={group} className='px-4 py-2 hover:bg-gray-100 cursor-pointer' onClick={() => handleMoveToGroup(group)}>
+                                                Group {group}
+                                            </li>
+                                        ))}
+                                    </ul>
+                                )}
+                            </li>
                             <li className='px-4 py-2 hover:bg-gray-100 cursor-pointer'>Option 2</li>
                             <li className='px-4 py-2 hover:bg-gray-100 cursor-pointer'>Option 3</li>
                         </ul>

@@ -136,6 +136,27 @@ export async function getAllProducts() {
   }
 }
 
+export async function updateProductGroup(productId: string, newGroup: number) {
+  try {
+    await connectToDB();
+
+    const result = await Product.findOneAndUpdate(
+      { _id: productId },
+      { $set: { group: newGroup } },
+      { new: true }
+    );
+
+    if (!result) {
+      throw new Error('Product not found');
+    }
+
+    return result;
+  } catch (error) {
+    console.log(error);
+    throw new Error(`Failed to update product group: ${error}`);
+  }
+}
+
 export async function getSimilarProducts(productId: string) {
   try {
     connectToDB();
