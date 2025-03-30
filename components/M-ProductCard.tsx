@@ -54,23 +54,30 @@ const ProductCard = ({ title, price, url, currency, image, productRouteID, isGro
     };
 
     const handleMoveToGroup = async (newGroup: number) => {
+        console.log(`Attempting to move to group: ${newGroup} for product: ${productRouteID}`);
+
         try {
-            const response = await fetch('/api/mongoGroup/updateGroup', {
-                method: 'POST',
+            const response = await fetch("/api/groupapi", {
+                method: "POST",
                 headers: {
-                    'Content-Type': 'application/json',
+                    "Content-Type": "application/json",
                 },
                 body: JSON.stringify({ productId: productRouteID, newGroup }),
             });
-            console.log("moving to group: ", newGroup);
 
-            if (response.ok) {
-                console.log('Group updated successfully');
-            } else {
-                console.error('Failed to update group');
+            console.log("Raw Response:", response);
+
+            if (!response.ok) {
+                console.error("Failed to update group:", response.status, response.statusText);
+                const errorData = await response.text();
+                console.error("Server Response:", errorData);
+                return;
             }
+
+            const data = await response.json();
+            console.log("API Response:", data);
         } catch (error) {
-            console.error('Error updating group:', error);
+            console.error("Error updating group:", error);
         }
     };
 
