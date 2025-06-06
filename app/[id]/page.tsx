@@ -2,9 +2,9 @@ import { getProductById, getSimilarProducts } from '@/lib/actions';
 import Image from 'next/image';
 import Link from 'next/link';
 import React from 'react'
-import Product from '../../models/product.model';
+import Product from '../../models/productSchemaMongoose';
 import { formatNumber } from '@/lib/utils';
-import PriceInfoCard from '@/components/PriceInfoCard';
+import PriceInfoCard from '@/components/ProductPriceCard';
 import { redirect } from "next/navigation";
 import ProductCard from '@/components/M-ProductCard';
 // import Modal from '@/components/Modal';
