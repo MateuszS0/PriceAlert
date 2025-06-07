@@ -1,7 +1,6 @@
 import React from 'react'
 import Image from 'next/image'
 import Searchbar from '@/components/Searchbar'
-import HCarousel from '@/components/HCarousel'
 import { getAllProducts } from '@/lib/actions'
 import ProductCard from '@/components/M-ProductCard'
 
@@ -17,33 +16,26 @@ const Home = async () => {
     <>
       <section className='px-6 md:px-16 py-1'>
         <div className="flex max-xl:flex-col">
-          <div className="flex flex-col justify-center">
+          <div className="flex flex-col w-full justify-center items-center px-[20%]">
 
             <h1 className='head-text py-1'>
               Welcome to
-              Price<span className='text-primary'>Alert</span>
+              <span className='text-green-500'> Price</span><span className='text-primary'>Alert</span>
             </h1>
-            <p className='small-text'>Track prices for your products:
-              <Image
-                src="assets/icons/arrow-right.svg"
-                alt='arrow-right'
-                width={16}
-                height={16}
-              />
-            </p>
-            <p className='mt-6'>Enter amazon product URL to track it:</p>
-
-            <Searchbar />
+            <p className='small-text'>Track prices for your Products, and group them together to get the best deals!</p>
+            <p className='mt-6 mb-2' >Enter product URL to track it:</p>
+            <div className='w-[80%]'>
+              <Searchbar />
+            </div>
           </div>
-          <HCarousel />
         </div>
       </section>
       <section className="groups-section">
         <h2 className="section-text">Your Groups</h2>
         <div className='groups-wrapper flex flex-row gap-16 justify-evenly'>
           {groups.map(group => (
-            <div key={group} className='group-wrapper'>
-              <div className='group-name-price'>
+            <div key={group} className='group-wrapper py-8'>
+              <div className='group-name-price mb-4'>
                 <h3 className='font-bold'>Group {group}</h3>
                 <h3>
                   Lowest price:{" "}

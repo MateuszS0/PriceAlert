@@ -19,7 +19,7 @@ const Navbar = () => {
             alt="logo"
           />
           <p className='nav-logo'>
-            Price<span className='text-primary'>Alert</span>
+            <span className='text-green-500'>Price</span><span className='text-red-500'>Alert</span>
           </p>
         </Link>
       </nav>
