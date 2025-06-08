@@ -22,10 +22,6 @@ const productSchema = new mongoose.Schema({
   reviewsCount: { type: Number },
   isOutOfStock: { type: Boolean, default: false },
   group: { type: Number, default: 0 },
-  // off for now
-  // users: [
-  //   { email: { type: String, required: true } }
-  // ], default: [],
 },
   { timestamps: true }
 );

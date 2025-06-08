@@ -1,10 +1,8 @@
 import { NextResponse } from "next/server";
 import { getLowestPrice, getHighestPrice, getAveragePrice } from "@/lib/utils";
-// import { getEmailNotifType } from "@/lib/utils";
 import { connectToDB } from "@/lib/scraper/mongoose";
 import Product from "@/models/productSchemaMongoose";
 import { scrapeAmazonProduct } from "@/lib/scraper/scraperAmazon";
-// import { generateEmailBody, sendEmail } from "@/lib/nodemailer";
 import { scraperFactory } from "@/lib/scraper/scraperFactory";
 
 export const maxDuration = 60;
@@ -13,7 +11,6 @@ export const revalidate = 0;
 
 export async function GET(request: Request) {
   try {
-    // Connect to the database
     connectToDB();
 
     const products = await Product.find({});
@@ -25,7 +22,6 @@ export async function GET(request: Request) {
         // Use scraperFactory to select the scraper dynamically
         const scraper = scraperFactory(currentProduct.url);
 
-        // Scrape the product
         const scrapedProduct = await scraper(currentProduct.url);
 
         if (!scrapedProduct) return;
@@ -52,22 +48,6 @@ export async function GET(request: Request) {
           },
           product
         );
-
-        // Check status and send email notifications if applicable
-        // const emailNotifType = getEmailNotifType(
-        //   scrapedProduct,
-        //   currentProduct
-        // );
-
-        // if (emailNotifType && updatedProduct.users.length > 0) {
-        //   const productInfo = {
-        //     title: updatedProduct.title,
-        //     url: updatedProduct.url,
-        //   };
-        //   // const emailContent = await generateEmailBody(productInfo, emailNotifType);
-        //   const userEmails = updatedProduct.users.map((user: any) => user.email);
-        //   // await sendEmail(emailContent, userEmails);
-        // }
 
         return updatedProduct;
       })

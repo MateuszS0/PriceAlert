@@ -2,12 +2,12 @@
 
 import axios from 'axios';
 import * as cheerio from 'cheerio';
-import { extractCurrency, extractDescription, extractPrice, extractReviews } from '../utils';
+import { extractCurrency, extractDescription, extractPrice } from '../utils';
 
 export async function scrapeAmazonProduct(url: string) {
   if (!url) return;
 
-  // BrightData proxy configuration
+  // BrightData proxy config
   const username = String(process.env.BRIGHT_DATA_USERNAME);
   const password = String(process.env.BRIGHT_DATA_PASSWORD);
   const port = String(process.env.BRIGHT_DATA_PORT);
@@ -45,9 +45,6 @@ export async function scrapeAmazonProduct(url: string) {
       $('#priceblock_dealprice'),
       $('.a-size-base.a-color-price').first()
     );
-    // const priceFraction = extractPrice(
-    //   $('span.a-price-fraction').first()
-    // )
 
     let outOfStock = $('#availability span').text().trim().toLowerCase() === 'currently unavailable';
 
@@ -56,11 +53,6 @@ export async function scrapeAmazonProduct(url: string) {
       $('#landingImage').attr('data-a-dynamic-image') ||
       '{}'
 
-    // const reviewsCount = extractReviews(
-    //   $('#averageCustomerReviews')
-
-
-    // )
 
     const imageUrls = Object.keys(JSON.parse(images));
 

@@ -1,9 +1,4 @@
 "use client"
-// whatever breaks use client its after the products are mapped.
-// Too many things are passed into the Products because of priceHistory.
-// fix description length for products (cronjob)
-
-// grupowanie produktow statycznych z use client
 import { Product } from '@/types';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -83,7 +78,6 @@ const ProductCard = ({ title, price, url, currency, image, productRouteID, isGro
 
     return (
         <div className='product-wrapper'>
-            {/* More icon for options */}
             <div className='relative'>
                 <Image className='w-4 h-4 cursor-pointer' src={moreIcon} alt='more' onClick={toggleDropdown} />
                 {dropdownVisible && (

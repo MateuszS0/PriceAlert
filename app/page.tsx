@@ -1,5 +1,4 @@
 import React from 'react'
-import Image from 'next/image'
 import Searchbar from '@/components/Searchbar'
 import { getAllProducts } from '@/lib/actions'
 import ProductCard from '@/components/M-ProductCard'
@@ -23,7 +22,7 @@ const Home = async () => {
               <span className='text-green-500'> Price</span><span className='text-primary'>Alert</span>
             </h1>
             <p className='small-text'>Track prices for your Products, and group them together to get the best deals!</p>
-            <p className='mt-6 mb-2' >Enter product URL to track it:</p>
+            <p className='mt-6 mb-2' >Paste in the product URL to track it:</p>
             <div className='w-[80%]'>
               <Searchbar />
             </div>
