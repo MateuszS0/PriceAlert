@@ -20,42 +20,54 @@ const isValidProductURL = (url: string) => {
 const Searchbar = () => {
   const [searchPrompt, SetsearchPrompt] = useState('');
   const [isLoading, SetisLoading] = useState(false);
+  const [error, setError] = useState('');
 
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    setError('');
     const isValidLink = isValidProductURL(searchPrompt);
-    if (!isValidLink) return alert("Provide a valid URL");
+    if (!isValidLink) {
+      setError('Please provide a valid Amazon or eBay URL');
+      return;
+    }
     try {
       SetisLoading(true)
-      //Scrape products from amazon
       const product = await scrapeAndStoreProduct(searchPrompt);
     } catch (error) {
       console.log(error);
-
+      setError('An error occurred while processing your request');
     } finally {
       SetisLoading(false)
     }
   }
 
   return (
-    <form className='flex flex-wrap gap-4 m4-12' onSubmit={handleSubmit}>
-      <input type="text"
-        value={searchPrompt}
-        onChange={(e) => {
-          SetsearchPrompt(e.target.value)
-
-        }}
-        placeholder="Enter product link"
-        className="searchbar-input" />
-      <button
-        type="submit"
-        className="searchbar-btn"
-        disabled={searchPrompt === ''}
-      >{isLoading ? 'Searching...' : 'Search'}
-      </button>
-
-
-    </form>
+    <div className="w-full">
+      {error && (
+        <div className="text-red-500 text-sm mb-2 font-medium">
+          {error}
+        </div>
+      )}
+      <form className='flex flex-wrap gap-4 m4-12' onSubmit={handleSubmit}>
+        <input
+          type="text"
+          value={searchPrompt}
+          onChange={(e) => {
+            SetsearchPrompt(e.target.value);
+            setError('');
+          }}
+          placeholder="Enter product link"
+          className={`searchbar-input ${error ? 'border-red-500' : ''}`}
+        />
+        <button
+          type="submit"
+          className="searchbar-btn"
+          disabled={searchPrompt === ''}
+        >
+          {isLoading ? 'Searching...' : 'Search'}
+        </button>
+      </form>
+    </div>
   )
 }
 

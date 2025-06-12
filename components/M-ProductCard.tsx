@@ -123,6 +123,11 @@ const ProductCard = ({ title, price, url, currency, image, productRouteID, isGro
                                 Move to
                                 {moveToVisible && (
                                     <ul className='absolute left-full top-0 mt-0 w-48 bg-white border border-gray-200 rounded shadow-lg z-50'>
+                                        <li
+                                            className='px-4 py-2 hover:bg-gray-100 cursor-pointer text-red-600 border-b border-gray-200'
+                                            onClick={() => handleMoveToGroup(0)}>
+                                            Remove from group
+                                        </li>
                                         {availableGroups.map(group => (
                                             <li key={group} className='px-4 py-2 hover:bg-gray-100 cursor-pointer' onClick={() => handleMoveToGroup(group)}>
                                                 Group {group}

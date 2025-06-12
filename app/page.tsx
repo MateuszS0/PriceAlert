@@ -15,15 +15,14 @@ const Home = async () => {
     <>
       <section className='px-6 md:px-16 py-1'>
         <div className="flex max-xl:flex-col">
-          <div className="flex flex-col w-full justify-center items-center px-[20%]">
+          <div className="relative max-w-4xl mx-auto px-6 py-16 text-center">
 
-            <h1 className='head-text py-1'>
-              Welcome to
-              <span className='text-green-500'> Price</span><span className='text-primary'>Alert</span>
+            <h1 className='text-5xl md:text-6xl font-bold tracking-tight mb-6 bg-gradient-to-r from-green-500 to-primary bg-clip-text text-transparent'>
+              Welcome to PriceAlert
             </h1>
-            <p className='small-text'>Track prices for your Products, and group them together to get the best deals!</p>
-            <p className='mt-6 mb-2' >Paste in Amazon or eBay product URL to track it:</p>
-            <div className='w-[80%]'>
+            <p className='text-xl text-gray-600 mb-6 max-w-2xl mx-auto'>Track prices for your Products, and group them together to get the best deals!</p>
+            <p className='text-gray-700 mb-4' >Paste in Amazon or eBay product URL to track it:</p>
+            <div className='w-[100%]'>
               <Searchbar />
             </div>
           </div>
@@ -63,25 +62,43 @@ const Home = async () => {
         </div>
       </section>
 
-      <section className="products-section">
-        <h2 className="section-text">Your Products</h2>
-        <div className="standard-layout flex flex-wrap gap-4">
-          {allProducts?.filter(product => product.group == 0).map((product) => {
-            return (
-              <ProductCard
-                key={product._id}
-                productRouteID={product._id}
-                title={product.title}
-                price={product.currentPrice}
-                currency={product.currency}
-                url={product.url}
-                image={product.image}
-                group={product.group}
-                availableGroups={groups}
-              />
-            );
-          })}
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 mb-16 mt-8">
+        <div className="flex justify-between items-center mb-8">
+          <div>
+            <h2 className="text-3xl font-bold text-gray-900">Your Products</h2>
+          </div>
+          <div className="flex items-center gap-4">
+            <span className="text-sm text-gray-500">
+              {allProducts?.filter(product => product.group === 0).length} items
+            </span>
+            <button className="px-4 py-2 text-primary hover:text-white border border-primary hover:bg-primary rounded-lg transition-colors duration-200">
+              View All →
+            </button>
+          </div>
         </div>
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+          {allProducts?.filter(product => product.group === 0).map((product) => (
+            <ProductCard
+              key={product._id}
+              productRouteID={product._id}
+              title={product.title}
+              price={product.currentPrice}
+              currency={product.currency}
+              url={product.url}
+              image={product.image}
+              group={product.group}
+              availableGroups={groups}
+            />
+          ))}
+        </div>
+
+        {allProducts?.filter(product => product.group === 0).length === 0 && (
+          <div className="text-center py-12">
+            <p className="text-gray-500">No ungrouped products found</p>
+            <p className="text-sm text-gray-400 mt-2">Products you add will appear here</p>
+          </div>
+        )}
       </section>
     </>
   )

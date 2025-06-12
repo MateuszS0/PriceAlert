@@ -8,21 +8,31 @@ interface Props {
   borderColor: string
 }
 
-const PriceInfoCard = ({ title, iconSrc, value }: Props) => {
+const PriceInfoCard = ({ title, iconSrc, value, borderColor }: Props) => {
   return (
-    <div className={`price-info_card`}>
-      <p className="text-base text-black-100">{title}</p>
-
-      <div className="flex gap-1">
-        <Image
-          src={iconSrc}
-          alt={title}
-          width={24}
-          height={24}
-        />
-
-        <p className="text-2xl font-bold text-secondary">{value}</p>
+    <div
+      className="bg-white rounded-xl p-4 shadow-sm hover:shadow-md transition-all duration-300 
+                 border-l-4 flex flex-col gap-3"
+      style={{ borderLeftColor: borderColor }}
+    >
+      <div className="flex items-center gap-2">
+        <div className="p-2 rounded-lg bg-gray-50">
+          <Image
+            src={iconSrc}
+            alt={title}
+            width={20}
+            height={20}
+            className="opacity-75"
+          />
+        </div>
+        <p className="text-sm font-medium text-gray-600">
+          {title}
+        </p>
       </div>
+
+      <p className="text-2xl font-bold text-gray-900 ml-1">
+        {value}
+      </p>
     </div>
   )
 }
