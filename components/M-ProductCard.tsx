@@ -73,7 +73,6 @@ const ProductCard = ({ title, price, url, currency, image, productRouteID, isGro
             setDropdownVisible(false);
             setMoveToVisible(false);
 
-            // Refresh to show updated groups
             window.location.reload();
         } catch (error) {
             console.error("Error updating group:", error);
@@ -103,7 +102,6 @@ const ProductCard = ({ title, price, url, currency, image, productRouteID, isGro
 
             const data = await response.json();
             console.log("Product deleted successfully:", data);
-            // Refresh the page to show updated list
             window.location.reload();
         } catch (error) {
             console.error("Error deleting product:", error);

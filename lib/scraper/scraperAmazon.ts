@@ -61,7 +61,7 @@ export async function scrapeAmazonProduct(url: string) {
 
     const description = extractDescription($)
 
-    // Construct data object with scraped information
+    // Construct object with scraped information
 
     if (outOfStock || currentPrice == 0 || currentPrice === null) {
       console.log("Item is out of stock.");

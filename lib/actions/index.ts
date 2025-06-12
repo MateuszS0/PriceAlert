@@ -4,7 +4,6 @@ import Product from "@/models/productSchemaMongoose";
 import { connectToDB } from "../scraper/mongoose";
 import { scrapeAmazonProduct } from "../scraper/scraperAmazon";
 import { getAveragePrice, getHighestPrice, getLowestPrice } from "../utils";
-// import { User } from '../../types/index';
 import { scraperFactory } from "../scraper/scraperFactory";
 
 export async function scrapeAndStoreProduct(productUrl: string) {
@@ -20,8 +19,6 @@ export async function scrapeAndStoreProduct(productUrl: string) {
       console.log("Product is out of stock");
       return;
     }
-
-    // const scrapedProduct = await scrapeAmazonProduct(productUrl);
 
     if (!scrapedProduct) return;
 

@@ -13,8 +13,7 @@ const PriceInfoCard = ({ title, iconSrc, value, borderColor }: Props) => {
     <div
       className="bg-white rounded-xl p-4 shadow-sm hover:shadow-md transition-all duration-300 
                  border-l-4 flex flex-col gap-3"
-      style={{ borderLeftColor: borderColor }}
-    >
+      style={{ borderLeftColor: borderColor }}>
       <div className="flex items-center gap-2">
         <div className="p-2 rounded-lg bg-gray-50">
           <Image
