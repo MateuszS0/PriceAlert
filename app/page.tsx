@@ -28,20 +28,23 @@ const Home = async () => {
           </div>
         </div>
       </section>
+
       <section className="groups-section">
         <h2 className="section-text">Your Groups</h2>
         <div className='groups-wrapper flex flex-row gap-16 justify-evenly'>
           {groups.map(group => (
             <div key={group} className='group-wrapper py-8'>
-              <div className='group-name-price mb-4'>
-                <h3 className='font-bold'>Group {group}</h3>
-                <h3>
-                  Lowest price:{" "}
-                  {allProducts?.length
-                    ? Math.min(...allProducts.filter(product => product.group === group).map(product => product.currentPrice)) : "N/A"}
-                </h3>
+              <div className='group-name-price mb-4 '>
+                <h3 className='text-xl font-semibold text-gray-900'>Group {group}</h3>
+                <div className="px-3 py-1 bg-green-50 rounded-full">
+                  <h3 className="text-sm text-green-600 font-medium">
+                    Lowest price:{" "}
+                    {allProducts?.length
+                      ? Math.min(...allProducts.filter(product => product.group === group).map(product => product.currentPrice)) : "N/A"}
+                  </h3>
+                </div>
               </div>
-              <div className="grouped-items">
+              <div className="grouped-items p-4 grid grid-cols-2 gap-3">
                 {allProducts?.filter(product => product.group === group).map(product => (
                   <ProductCard
                     key={product._id}
