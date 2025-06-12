@@ -22,7 +22,7 @@ const Home = async () => {
               <span className='text-green-500'> Price</span><span className='text-primary'>Alert</span>
             </h1>
             <p className='small-text'>Track prices for your Products, and group them together to get the best deals!</p>
-            <p className='mt-6 mb-2' >Paste in the product URL to track it:</p>
+            <p className='mt-6 mb-2' >Paste in Amazon or eBay product URL to track it:</p>
             <div className='w-[80%]'>
               <Searchbar />
             </div>

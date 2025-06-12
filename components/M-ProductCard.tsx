@@ -60,8 +60,6 @@ const ProductCard = ({ title, price, url, currency, image, productRouteID, isGro
                 body: JSON.stringify({ productId: productRouteID, newGroup }),
             });
 
-            console.log("Raw Response:", response);
-
             if (!response.ok) {
                 console.error("Failed to update group:", response.status, response.statusText);
                 const errorData = await response.text();
@@ -71,8 +69,44 @@ const ProductCard = ({ title, price, url, currency, image, productRouteID, isGro
 
             const data = await response.json();
             console.log("API Response:", data);
+
+            setDropdownVisible(false);
+            setMoveToVisible(false);
+
+            // Refresh to show updated groups
+            window.location.reload();
         } catch (error) {
             console.error("Error updating group:", error);
+        }
+    };
+
+    const handleDelete = async () => {
+        if (!confirm('Are you sure you want to delete this product?')) {
+            return;
+        }
+
+        try {
+            const response = await fetch("/api/groupapi", {
+                method: "DELETE",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({ productId: productRouteID }),
+            });
+
+            if (!response.ok) {
+                console.error("Failed to delete product:", response.status, response.statusText);
+                const errorData = await response.text();
+                console.error("Server Response:", errorData);
+                return;
+            }
+
+            const data = await response.json();
+            console.log("Product deleted successfully:", data);
+            // Refresh the page to show updated list
+            window.location.reload();
+        } catch (error) {
+            console.error("Error deleting product:", error);
         }
     };
 
@@ -97,8 +131,7 @@ const ProductCard = ({ title, price, url, currency, image, productRouteID, isGro
                                     </ul>
                                 )}
                             </li>
-                            <li className='px-4 py-2 hover:bg-gray-100 cursor-pointer'>Option 2</li>
-                            <li className='px-4 py-2 hover:bg-gray-100 cursor-pointer'>Option 3</li>
+                            <li className='px-4 py-2 hover:bg-gray-100 cursor-pointer' onClick={handleDelete}>Delete</li>
                         </ul>
                     </div>
                 )}
